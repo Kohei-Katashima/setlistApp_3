@@ -39,7 +39,7 @@
           </form>
           <div class="text-right">
             <small class="mt-3 pt-3">
-              <a href="">戻る</a>
+              <a href="{{ route('songs.index', ['setlist' => $song->setlist_id]) }}">戻る</a>
             </small>
           </div>
         </div>

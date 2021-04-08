@@ -30,7 +30,7 @@ class SetlistController extends Controller
         $user->setlists()->save($setlist);
 
         return redirect()->route('songs.index', [
-            'id' => $setlist->id,
+            'setlist' => $setlist->id,
         ]);
     }
 }

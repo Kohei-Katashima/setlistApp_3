@@ -39,7 +39,7 @@ class HomeController extends Controller
  
          // フォルダがあればそのフォルダのタスク一覧にリダイレクトする
          return redirect()->route('songs.index', [
-             'id' => $setlist->id,
+             'setlist' => $setlist->id,
          ]);
     }
 }

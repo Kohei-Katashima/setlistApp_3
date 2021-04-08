@@ -43,7 +43,7 @@ class SongController extends Controller
     public function showCreateForm(Setlist $setlist)
     {
         return view('songs/create', [
-            'setlist_id' => $setlist->id
+            'setlist' => $setlist->id
         ]);
     }
 
