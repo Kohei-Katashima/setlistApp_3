@@ -66,6 +66,8 @@ class SongController extends Controller
      */
     public function showEditForm(Setlist $setlist, Song $song)
     {
+        $this->checkRelation($setlist, $song);
+
         return view('songs/edit', [
             'song' => $song,
         ]);
@@ -73,16 +75,22 @@ class SongController extends Controller
 
     public function edit(Setlist $setlist, Song $song, CreateSong $request)
     {
-        // $this->checkRelation($setlist, $song);
-        // 2
+        $this->checkRelation($setlist, $song);
+
         $song->band_name = $request->band_name;
         $song->title = $request->title;
         $song->time = $request->time;
         $song->save();
 
-        // 3
         return redirect()->route('songs.index', [
             'setlist' => $song->setlist_id,
         ]);
     }
+
+    private function checkRelation(Setlist $setlist, Song $song)
+{
+    if ($setlist->id !== $song->setlist_id) {
+        abort(404);
+    }
+}
 }
