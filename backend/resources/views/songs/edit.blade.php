@@ -22,12 +22,12 @@
           <form action="{{ route('songs.edit', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" method="POST">
             @csrf
             <div class="form-group">
-              <label for="band_name">アーティスト名</label>
-              <input type="text" class="form-control" name="band_name" id="band_name" value="{{ old('band_name') ?? $song->band_name }}" />
-            </div>
-            <div class="form-group">
               <label for="title">タイトル</label>
               <input type="text" class="form-control" name="title" id="title" value="{{ old('title') ?? $song->title }}" />
+            </div>
+            <div class="form-group">
+              <label for="band_name">アーティスト名</label>
+              <input type="text" class="form-control" name="band_name" id="band_name" value="{{ old('band_name') ?? $song->band_name }}" />
             </div>
             <div class="form-group">
               <label for="time">時間</label>

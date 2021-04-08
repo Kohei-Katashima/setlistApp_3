@@ -38,7 +38,19 @@ Route::group(['middleware' => 'auth'], function () {
         // 曲編集
         Route::get('/setlists/{setlist}/songs/{song}/edit', 'SongController@showEditForm')->name('songs.edit');
         Route::post('/setlists/{setlist}/songs/{song}/edit', 'SongController@edit');
+
+        // 削除
+        Route::delete('/setlists/{setlist}/songs/{song}/delete', 'SongController@delete')->name('songs.delete');
     });
+});
+
+Route::prefix('login')->name('login.')->group(function () {
+    Route::get('/{provider}', 'Auth\LoginController@redirectToProvider')->name('{provider}');
+    Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('{provider}.callback');
+});
+Route::prefix('register')->name('register.')->group(function () {
+    Route::get('/{provider}', 'Auth\RegisterController@showProviderUserRegistrationForm')->name('{provider}');
+    Route::post('/{provider}', 'Auth\RegisterController@registerProviderUser')->name('{provider}');
 });
 
 Auth::routes();

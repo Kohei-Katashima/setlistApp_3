@@ -22,12 +22,12 @@
             <form action="{{ route('songs.create', ['setlist' => $setlist]) }}" method="POST">
               @csrf
               <div class="form-group">
-                <label for="band_name">アーティスト名</label>
-                <input type="text" class="form-control" name="band_name" id="band_name" value="{{ old('band_name') }}" />
-              </div>
-              <div class="form-group">
                 <label for="title">タイトル</label>
                 <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}" />
+              </div>
+              <div class="form-group">
+                <label for="band_name">アーティスト名</label>
+                <input type="text" class="form-control" name="band_name" id="band_name" value="{{ old('band_name') }}" />
               </div>
               <div class="form-group">
                 <label for="time">時間</label>
@@ -37,6 +37,11 @@
                 <button type="submit" class="btn btn-primary">送信</button>
               </div>
             </form>
+            <div class="text-right">
+            <small class="mt-3 pt-3">
+              <a href="{{ route('songs.index', ['setlist' => $setlist]) }}">戻る</a>
+            </small>
+          </div>
           </div>
         </nav>
       </div>

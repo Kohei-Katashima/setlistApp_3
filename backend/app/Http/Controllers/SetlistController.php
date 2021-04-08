@@ -7,6 +7,8 @@ use App\Models\Setlist;
 use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 
 class SetlistController extends Controller
 {
@@ -28,6 +30,8 @@ class SetlistController extends Controller
         // $set->save($setlist);
 
         $user->setlists()->save($setlist);
+
+        Session::flash('err_msg', 'セットリストファイルが追加されました。');
 
         return redirect()->route('songs.index', [
             'setlist' => $setlist->id,

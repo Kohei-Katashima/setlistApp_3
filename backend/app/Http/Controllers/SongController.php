@@ -7,6 +7,7 @@ use App\Models\Setlist;
 use App\Models\Song;
 use App\Http\Requests\CreateSong;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class SongController extends Controller
 {
@@ -56,6 +57,8 @@ class SongController extends Controller
 
         $setlist->songs()->save($song);
 
+        Session::flash('err_msg', '曲が追加されました。');
+
         return redirect()->route('songs.index', [
             'setlist' => $setlist->id,
         ]);
@@ -82,15 +85,41 @@ class SongController extends Controller
         $song->time = $request->time;
         $song->save();
 
+        Session::flash('err_msg', '曲が更新されました。');
+
+        return redirect()->route('songs.index', [
+            'setlist' => $song->setlist_id,
+        ]);
+    }
+
+    public function delete(Setlist $setlist, Song $song, CreateSong $request)
+    {
+        $this->checkRelation($setlist, $song);
+
+
+        if (empty($song)) {
+            Session::flash('err_msg', 'データがありません');
+            return redirect()->route('songs.index', [
+                'setlist' => $song->setlist_id,
+            ]);
+        }
+        dd($song);
+        $song->$request->id->delete();
+        try {
+            
+        } catch (\Throwable $e) {
+            abort(500);
+        }
+        Session::flash('err_msg', '曲が削除されました。');
         return redirect()->route('songs.index', [
             'setlist' => $song->setlist_id,
         ]);
     }
 
     private function checkRelation(Setlist $setlist, Song $song)
-{
-    if ($setlist->id !== $song->setlist_id) {
-        abort(404);
+    {
+        if ($setlist->id !== $song->setlist_id) {
+            abort(404);
+        }
     }
-}
 }
