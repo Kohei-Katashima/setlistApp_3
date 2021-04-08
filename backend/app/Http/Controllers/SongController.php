@@ -19,6 +19,11 @@ class SongController extends Controller
      */
     public function index(Setlist $setlist)
     {
+
+        if (Auth::user()->id !== $setlist->user_id) {
+            abort(403);
+        }
+
         // ユーザーのフォルダを取得する
         $setlists = Auth::user()->setlists()->get();
 
@@ -52,22 +57,23 @@ class SongController extends Controller
         $setlist->songs()->save($song);
 
         return redirect()->route('songs.index', [
-            'id' => $setlist->id,
+            'setlist' => $setlist->id,
         ]);
     }
 
     /**
      * GET /setlists/{id}/songs/{song_id}/edit
      */
-    public function showEditForm(Setlist $setlist, int $song)
+    public function showEditForm(Setlist $setlist, Song $song)
     {
         return view('songs/edit', [
             'song' => $song,
         ]);
     }
 
-    public function edit(Setlist $setlist, int $song, CreateSong $request)
+    public function edit(Setlist $setlist, Song $song, CreateSong $request)
     {
+        // $this->checkRelation($setlist, $song);
         // 2
         $song->band_name = $request->band_name;
         $song->title = $request->title;
@@ -76,7 +82,7 @@ class SongController extends Controller
 
         // 3
         return redirect()->route('songs.index', [
-            'id' => $song->setlist_id,
+            'setlist' => $song->setlist_id,
         ]);
     }
 }

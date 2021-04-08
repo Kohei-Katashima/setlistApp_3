@@ -19,7 +19,7 @@
             @endforeach
           </div>
           @endif
-          <form action="{{ route('songs.edit', ['id' => $song->setlist_id, 'song_id' => $song->id]) }}" method="POST">
+          <form action="{{ route('songs.edit', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" method="POST">
             @csrf
             <div class="form-group">
               <label for="band_name">アーティスト名</label>
