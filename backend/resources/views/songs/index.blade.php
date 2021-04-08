@@ -13,7 +13,7 @@
             </div>
             <div class="list-group">
               @foreach($setlists as $setlist)
-              <a href="{{ route('songs.index', ['id' => $setlist->id]) }}" class="list-group-item {{ $current_setlist_id === $setlist->id ? 'active' : '' }}">
+              <a href="{{ route('songs.index', ['setlist' => $setlist->id]) }}" class="list-group-item {{ $current_setlist_id === $setlist->id ? 'active' : '' }}">
                 {{ $setlist->title }}
               </a>
               @endforeach
@@ -26,7 +26,7 @@
             <div class="panel-heading"> セットリスト</div>
             <div class="panel-body">
               <div class="text-right">
-                <a href="{{ route('songs.create', ['id' => $current_setlist->id]) }}" class="btn btn-default btn-block">
+                <a href="{{ route('songs.create', ['setlist' => $setlist->id]) }}" class="btn btn-default btn-block">
                   曲を追加する
                 </a>
               </div>
@@ -46,7 +46,7 @@
                   <td>{{ $song->title }}</td>
                   <td>{{ $song->band_name }}</td>
                   <td>{{ $song->time }}</td>
-                  <td><a href="{{ route('songs.edit', ['id' => $song->setlist_id, 'song_id' => $song->id]) }}">編集</a></td>
+                  <td><a href="{{ route('songs.edit', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}">編集</a></td>
                 </tr>
                 @endforeach
               </tbody>

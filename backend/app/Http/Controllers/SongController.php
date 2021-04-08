@@ -11,29 +11,23 @@ use Illuminate\Support\Facades\Auth;
 class SongController extends Controller
 {
     //
-    public function index(int $id)
+
+    /**
+     * song一覧
+     * @param Setlist $setlist
+     * @return \Illuminate\View\View
+     */
+    public function index(Setlist $setlist)
     {
-        $user = Auth::user();
-
-        // $set = Setlist::with('users');
-
-        $setlists = $user->setlists()->get();
-
-        // $setlists = $set->get();
-        // 選ばれたフォルダを取得する
-        $current_setlist = Setlist::find($id);
-
-        if (is_null($current_setlist)) {
-            abort(404);
-        }
+        // ユーザーのフォルダを取得する
+        $setlists = Auth::user()->setlists()->get();
 
         // 選ばれたフォルダに紐づく曲を取得する
-        $songs = $current_setlist->songs()->get();
+        $songs = $setlist->songs()->get();
 
         return view('songs/index', [
             'setlists' => $setlists,
-            'current_setlist' => $current_setlist,
-            'current_setlist_id' => $current_setlist->$id,
+            'current_setlist_id' => $setlist->id,
             'songs' => $songs,
         ]);
     }
@@ -41,46 +35,39 @@ class SongController extends Controller
     /**
      * GET /setlists/{id}/songs/create
      */
-    public function showCreateForm(int $id)
+    public function showCreateForm(Setlist $setlist)
     {
         return view('songs/create', [
-            'setlist_id' => $id
+            'setlist_id' => $setlist->id
         ]);
     }
 
-    public function create(int $id, CreateSong $request)
+    public function create(Setlist $setlist, CreateSong $request)
     {
-        $current_setlist = Setlist::find($id);
-
         $song = new Song();
         $song->band_name = $request->band_name;
         $song->title = $request->title;
         $song->time = $request->time;
 
-        $current_setlist->songs()->save($song);
+        $setlist->songs()->save($song);
 
         return redirect()->route('songs.index', [
-            'id' => $current_setlist->id,
+            'id' => $setlist->id,
         ]);
     }
 
     /**
      * GET /setlists/{id}/songs/{song_id}/edit
      */
-    public function showEditForm(int $id, int $song_id)
+    public function showEditForm(Setlist $setlist, int $song)
     {
-        $song = Song::find($song_id);
-
         return view('songs/edit', [
             'song' => $song,
         ]);
     }
 
-    public function edit(int $id, int $song_id, CreateSong $request)
+    public function edit(Setlist $setlist, int $song, CreateSong $request)
     {
-        // 1
-        $song = Song::find($song_id);
-
         // 2
         $song->band_name = $request->band_name;
         $song->title = $request->title;
