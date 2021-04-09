@@ -24,17 +24,19 @@ class SongController extends Controller
         if (Auth::user()->id !== $setlist->user_id) {
             abort(403);
         }
-
+        
         // ユーザーのフォルダを取得する
         $setlists = Auth::user()->setlists()->get();
-
+        
         // 選ばれたフォルダに紐づく曲を取得する
         $songs = $setlist->songs()->get();
+        // $sum = $songs->sum('time');
 
         return view('songs/index', [
             'setlists' => $setlists,
             'current_setlist_id' => $setlist->id,
             'songs' => $songs,
+            // 'sum' => $sum,
         ]);
     }
 
@@ -92,7 +94,7 @@ class SongController extends Controller
         ]);
     }
 
-    public function delete(Setlist $setlist, Song $song, CreateSong $request)
+    public function delete(Setlist $setlist, Song $song)
     {
         $this->checkRelation($setlist, $song);
 
@@ -103,10 +105,8 @@ class SongController extends Controller
                 'setlist' => $song->setlist_id,
             ]);
         }
-        dd($song);
-        $song->$request->id->delete();
         try {
-            
+            $song->delete();
         } catch (\Throwable $e) {
             abort(500);
         }
