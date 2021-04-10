@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth'], function () {
     // リスト追加
     Route::get('/setlists/create', 'SetlistController@showCreateForm')->name('setlists.create');
     Route::post('/setlists/create', 'SetlistController@create');
+    // 検索
+    Route::get('/setlists/{setlist}/songs/search', 'SongController@search')->name('songs.search');
 
     Route::group(['middleware' => 'can:view,setlist'], function () {
         Route::get('/setlists/{setlist}/songs', 'SongController@index')->name('songs.index');
@@ -41,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         // 削除
         Route::delete('/setlists/{setlist}/songs/{song}/delete', 'SongController@delete')->name('songs.delete');
-
+        
     });
 });
 

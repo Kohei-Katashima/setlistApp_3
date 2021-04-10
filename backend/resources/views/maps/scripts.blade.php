@@ -1,4 +1,3 @@
-@section('scripts')
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBR5RLGX11pxAYicF__NvgyK9OMIqiDqis&libraries=places" charset="utf-8"></script>
 
 <script>
@@ -96,4 +95,3 @@
   // ページ読み込み完了後、Googleマップを表示
   google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-@endsection

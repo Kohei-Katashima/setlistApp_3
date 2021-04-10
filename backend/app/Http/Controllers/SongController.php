@@ -122,4 +122,26 @@ class SongController extends Controller
             abort(404);
         }
     }
+
+    public function search(Setlist $setlist, Request $request)
+    {
+        //
+        $setlists = Setlist::latest()->where('title', 'like', "%{$request->search}%")->paginate(5);
+        
+        $search_result = $request->search. 'を含むセットリストの検索結果'. $setlists->total(). '件';
+
+        // ユーザーのフォルダを取得する
+        $setlists = Auth::user()->setlists()->get();
+        
+        // 選ばれたフォルダに紐づく曲を取得する
+        $songs = $setlist->songs()->get();
+
+        return view('songs.index', [
+            'setlists' => $setlists,
+            'search_result' => $search_result,
+            'search_query' => $request->search,
+            'current_setlist_id' => $setlist->id,
+            'songs' => $songs,
+        ]);
+    }
 }

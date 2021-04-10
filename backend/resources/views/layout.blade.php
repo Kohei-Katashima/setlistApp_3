@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>SetList App</title>
   @yield('styles')
+  <link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -15,7 +16,7 @@
 <body>
   <header>
     <nav class="my-navbar">
-      <a class="my-navbar-brand" href="/">SetList App</a>
+      <a class="my-navbar-brand" href="/"><img class="mr-3" src="{{ asset('image/logo_transparent.png') }}" alt="" width="64" height="64">SetList App</a>
       <div class="my-navbar-control">
         @if(Auth::check())
         <span class="my-navbar-item">ようこそ, {{ Auth::user()->name }}さん</span>
