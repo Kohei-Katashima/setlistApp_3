@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         // 削除
         Route::delete('/setlists/{setlist}/songs/{song}/delete', 'SongController@delete')->name('songs.delete');
+
     });
 });
 
