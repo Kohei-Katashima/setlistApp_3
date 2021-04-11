@@ -24,13 +24,22 @@ class SongController extends Controller
         if (Auth::user()->id !== $setlist->user_id) {
             abort(403);
         }
-        
+
         // ユーザーのフォルダを取得する
         $setlists = Auth::user()->setlists()->get();
-        
+
         // 選ばれたフォルダに紐づく曲を取得する
         $songs = $setlist->songs()->get();
-        // $sum = $songs->sum('time');
+
+        //     $sum = Song::select('SEC_TO_TIME(sum(time_to_sec(TIMEDURATION)))')
+        //   ->where('setlist_id', '4')->get();
+
+
+        // $sum = $songs->sum('time_to_sec(time)) as total_sec,
+        // sec_to_time(sum( time_to_sec(time))) as total_time ');
+
+
+        // dd($sum);
 
         return view('songs/index', [
             'setlists' => $setlists,
@@ -127,12 +136,12 @@ class SongController extends Controller
     {
         //
         $setlists = Setlist::latest()->where('title', 'like', "%{$request->search}%")->paginate(5);
-        
-        $search_result = $request->search. 'を含むセットリストの検索結果'. $setlists->total(). '件';
+
+        $search_result = $request->search . 'を含むセットリストの検索結果' . $setlists->total() . '件';
 
         // ユーザーのフォルダを取得する
         $setlists = Auth::user()->setlists()->get();
-        
+
         // 選ばれたフォルダに紐づく曲を取得する
         $songs = $setlist->songs()->get();
 

@@ -22,7 +22,7 @@ class CreateSongsTable extends Migration
             $table->timestamps();
 
             // 外部キーを設定する
-            $table->foreign('setlist_id')->references('id')->on('setlists');
+            $table->foreign('setlist_id')->references('id')->on('setlists')->onDelete('cascade');
         });
     }
 

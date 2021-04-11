@@ -35,4 +35,54 @@ class SetlistController extends Controller
             'setlist' => $setlist->id,
         ]);
     }
+
+    public function showEditForm(Setlist $setlist )
+    {
+
+        return view('setlists/edit', [
+            'setlist' => $setlist,
+        ]);
+    }
+
+    public function edit(Setlist $setlist,CreateSetlist $request)
+    {
+
+        $setlist->title = $request->title;
+        $setlist->save();
+
+        Session::flash('err_msg', '曲が更新されました。');
+
+        return redirect()->route('songs.index', [
+            'setlist' => $setlist,
+        ]);
+    }
+
+    public function delete(Setlist $setlist)
+    {
+
+        if (empty($setlist)) {
+            Session::flash('err_msg', 'データがありません');
+            return redirect()->route('songs.index', [
+                'setlist' => $setlist
+            ]);
+        }
+        try {
+            $setlist->delete();
+        } catch (\Throwable $e) {
+            abort(500);
+        }
+        $user = Auth::user();
+
+         // // ログインユーザーに紐づくフォルダを一つ取得する
+         $setlist = $user->setlists()->first();
+ 
+         // まだ一つもフォルダを作っていなければホームページをレスポンスする
+         if (is_null($setlist)) {
+             return view('home');
+         }
+        Session::flash('err_msg', 'セットリストフォルダが削除されました。');
+        return redirect()->route('songs.index', [
+            'setlist' => $setlist
+        ]);
+    }
 }

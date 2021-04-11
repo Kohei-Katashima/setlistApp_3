@@ -23,18 +23,30 @@
           </a>
         </div>
         <div class="list-group">
-          @foreach($setlists as $setlist)
-          <a href="{{ route('songs.index', ['setlist' => $setlist->id]) }}" class="list-group-item {{ $current_setlist_id === $setlist->id ? 'active' : '' }}">
-            {{ $setlist->title }}
-          </a>
-          @endforeach
+          <div class="">
+            @foreach($setlists as $setlist)
+            <a href="{{ route('songs.index', ['setlist' => $setlist->id]) }}" class="list-group-item {{ $current_setlist_id === $setlist->id ? 'active' : '' }}">
+              {{ $setlist->title }}
+            </a>
+            <button type="button" class="btn dropdown-toggle dropdown-toggle-split  {{ $current_setlist_id === $setlist->id ? 'active' : '' }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">▽
+            </button>
+            <div class="dropdown-menu" style="background-color: #fff;">
+              <a href="{{ route('setlists.edit', ['setlist' => $setlist->id]) }}" class='list-group-item dropdown-item'>集編</a>
+              <form action="{{ route('setlists.delete', ['setlist' => $setlist->id]) }}" method="POST" onsubmit="return checkDelete()">
+                @csrf
+                @method('DELETE')
+                <button type='submit' class='float-right list-group-item dropdown-item'> 削除</button>
+              </form>
+            </div>
+            @endforeach
+          </div>
         </div>
       </nav>
     </div>
     <div class="column col-md-8">
       <!-- ここにタスクが表示される -->
       <div class="panel panel-default">
-        <div class="panel-heading"> セットリスト</div>
+        <div class="panel-heading">セットリスト</div>
         <div class="panel-body">
           <div class="text-right">
             <a href="{{ route('songs.create', ['setlist' => $current_setlist_id]) }}" class="btn btn-default btn-block">
@@ -62,7 +74,7 @@
               <td class="textbox">{{ $song->title }}</td>
               <td class="textbox">{{ $song->band_name }}</td>
               <td class="textbox">{{ substr($song->time, 0, 5)}}</td>
-              <td><a href="{{ route('songs.edit', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}">編集</a></td>
+              <td><a href="{{ route('songs.edit', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" class='btn btn-primary'>編集</a></td>
               <form action="{{ route('songs.delete', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" method="POST" onsubmit="return checkDelete()">
                 @csrf
                 @method('DELETE')
@@ -165,3 +177,8 @@
   });
 </script>
 @extends('maps.scripts')
+
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>

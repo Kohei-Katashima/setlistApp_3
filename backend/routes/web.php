@@ -26,6 +26,12 @@ Route::group(['middleware' => 'auth'], function () {
     // リスト追加
     Route::get('/setlists/create', 'SetlistController@showCreateForm')->name('setlists.create');
     Route::post('/setlists/create', 'SetlistController@create');
+    // リスト編集
+    Route::get('/setlists/{setlist}/edit', 'SetlistController@showEditForm')->name('setlists.edit');
+    Route::post('/setlists/{setlist}/edit', 'SetlistController@edit');
+
+    // リスト削除
+    Route::delete('/setlists/{setlist}/delete', 'SetlistController@delete')->name('setlists.delete');
     // 検索
     Route::get('/setlists/{setlist}/songs/search', 'SongController@search')->name('songs.search');
 
