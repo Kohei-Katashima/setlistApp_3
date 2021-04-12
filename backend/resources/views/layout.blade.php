@@ -21,7 +21,7 @@
       <a class="my-navbar-brand" href="/"><img class="mr-3" src="{{ asset('image/logo_transparent.png') }}" alt="" width="64" height="64">SetList App</a>
       <div class="my-navbar-control">
         @if(Auth::check())
-        <span class="my-navbar-item">ようこそ, {{ Auth::user()->name }}さん</span>
+        <span class="my-navbar-item">{{ Auth::user()->name }}さん</span>
         ｜
         <a class="my-navbar-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

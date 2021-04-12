@@ -54,10 +54,8 @@
       <!-- ここにタスクが表示される -->
       <div class="panel panel-default">
         <div id="accordion" class="accordion-container">
-
           <div class="panel-heading accordion-title js-accordion-title" style="background-color: #e6e9ed;">セットリスト</div>
           <div class="accordion-content">
-
             <div class="panel-body">
               <div class="text-right">
                 <a href="{{ route('songs.create', ['setlist' => $current_setlist_id]) }}" class="btn btn-default btn-block">
@@ -65,69 +63,68 @@
                 </a>
               </div>
             </div>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>曲順</th>
-                  <th>タイトル</th>
-                  <th>
-                    <div class="text-center">
-                      アーティスト名
-                    </div>
-                  </th>
-                  <th>時間</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="sort">
-                <?php $i = 1; //表示順用のカウンタ　
-                ?>
-                @foreach($songs as $song)
-                <tr>
-                  <td class="class_orderby_id"> {{ $i++ }}</td>
-                  <td class="textbox">{{ $song->title }}</td>
-                  <td class="textbox">
-                    <div class="text-center">
-                      {{ $song->band_name }}
-                    </div>
-                  </td>
-                  <td class="textbox">{{ substr($song->time, 0, 5)}}</td>
-                  <td>
-                    <div class="text-right">
-                      <a href="{{ route('songs.edit', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" class='btn btn-primary btn-sm'>編集</a>
-                    </div>
-                  </td>
-                  <form action="{{ route('songs.delete', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" method="POST" onsubmit="return checkDelete()">
-                    @csrf
-                    @method('DELETE')
-                    <td><button type='submit' class='btn btn-primary btn-sm'> 削除</button></td>
-                  </form>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>曲順</th>
+                    <th>タイトル</th>
+                    <th>
+                      <div class="text-center">
+                        アーティスト名
+                      </div>
+                    </th>
+                    <th>時間</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="sort">
+                  <?php $i = 1; //表示順用のカウンタ　
+                  ?>
+                  @foreach($songs as $song)
+                  <tr>
+                    <td class="class_orderby_id"> {{ $i++ }}</td>
+                    <td class="textbox">{{ $song->title }}</td>
+                    <td class="textbox">
+                      <div class="text-center">
+                        {{ $song->band_name }}
+                      </div>
+                    </td>
+                    <td class="textbox">{{ substr($song->time, 0, 5)}}</td>
+                    <td>
+                      <div class="text-right">
+                        <a href="{{ route('songs.edit', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" class='btn btn-primary btn-sm'>編集</a>
+                      </div>
+                    </td>
+                    <form action="{{ route('songs.delete', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" method="POST" onsubmit="return checkDelete()">
+                      @csrf
+                      @method('DELETE')
+                      <td><button type='submit' class='btn btn-primary btn-sm'> 削除</button></td>
+                    </form>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col col-md-8">
-          <nav class="panel panel-default">
-            <div id="accordion" class="accordion-container">
-              <div class="panel-heading accordion-title js-accordion-title" style="background-color: #e6e9ed;">
+      <div class="container">
+        <div class="row">
+          <div class="col col-md-8">
+            <nav class="panel panel-default">
+              <div class="panel-heading " style="background-color: #e6e9ed;">
                 <input type="text" size="30" id="search" value="下北沢　ライブハウス" />
                 <input type="button" size="55" value="検索" onClick="SearchGo()" />
               </div>
               <div id="map_canvas" style="width: 100%; height: 30%;"></div>
-            </div>
+          </div>
+          </nav>
         </div>
-        </nav>
       </div>
     </div>
   </div>
-</div>
 </div>
 @endsection
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>

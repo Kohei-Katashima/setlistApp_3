@@ -94,7 +94,6 @@ class SongController extends Controller
         $song->band_name = $request->band_name;
         $song->title = $request->title;
         $song->time = $request->time;
-        $song->id = $request->id;
         $song->save();
 
         Session::flash('err_msg', '曲が更新されました。');
