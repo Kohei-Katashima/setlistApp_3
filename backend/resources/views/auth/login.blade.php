@@ -25,7 +25,7 @@
                             <input type="password" class="form-control" id="password" name="password" />
                         </div>
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary">送信</button>
+                            <button type="submit" class="btn btn-primary">ログイン</button>
                         </div>
                     </form>
                     <div class="text-right">

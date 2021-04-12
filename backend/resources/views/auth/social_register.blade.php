@@ -26,7 +26,7 @@
                             <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" />
                         </div>
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary">送信</button>
+                            <button type="submit" class="btn btn-primary">登録</button>
                         </div>
                     </form>
                 </div>
