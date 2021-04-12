@@ -1,0 +1,23 @@
+.accordion-title{
+  position: relative;
+}
+
+.accordion-title:after {
+  content: "";
+  position: absolute;
+  right: 25px;
+  top: 38%;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-top: solid 2px #434a54;
+  border-right: solid 2px #434a54;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+.accordion-title.open:after {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  top: 45%;
+}

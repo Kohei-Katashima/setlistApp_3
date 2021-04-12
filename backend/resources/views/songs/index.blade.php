@@ -11,34 +11,41 @@
   <div class="row">
     <div class="col col-md-4">
       <nav class="panel panel-default">
-        <div class="panel-heading">セットリストフォルダ</div>
-        <div class="panel-body">
-          <form class="form-inline mt-2 mt-md-0 ml-2" action="{{ route('songs.search', ['setlist' => $current_setlist_id]) }}" method="GET">
-            @csrf
-            <input class="form-control" type="search" placeholder="盛り上がるセット" aria-label="Search" name="search">
-            <button class="btn btn-outline-success " type="submit"><i class="fas fa-search"></i></button>
-          </form>
-          <a href="{{ route('setlists.create') }}" class="btn btn-default btn-block">
-            フォルダを追加する
-          </a>
-        </div>
-        <div class="list-group">
-          <div class="">
-            @foreach($setlists as $setlist)
-            <a href="{{ route('songs.index', ['setlist' => $setlist->id]) }}" class="list-group-item {{ $current_setlist_id === $setlist->id ? 'active' : '' }}">
-              {{ $setlist->title }}
-            </a>
-            <button type="button" class="btn dropdown-toggle dropdown-toggle-split  {{ $current_setlist_id === $setlist->id ? 'active' : '' }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">▽
-            </button>
-            <div class="dropdown-menu" style="background-color: #fff;">
-              <a href="{{ route('setlists.edit', ['setlist' => $setlist->id]) }}" class='list-group-item dropdown-item'>集編</a>
-              <form action="{{ route('setlists.delete', ['setlist' => $setlist->id]) }}" method="POST" onsubmit="return checkDelete()">
+        <div id="accordion" class="accordion-container">
+          <div class="panel-heading accordion-title js-accordion-title" style="background-color: #e6e9ed;">セットリストフォルダ</div>
+          <div class="accordion-content">
+            <div class="panel-body">
+              <form class="form-inline mt-2 mt-md-0 ml-2" action="{{ route('songs.search', ['setlist' => $current_setlist_id]) }}" method="GET">
                 @csrf
-                @method('DELETE')
-                <button type='submit' class='float-right list-group-item dropdown-item'> 削除</button>
+                <input class="form-control" type="search" placeholder="盛り上がるセット" aria-label="Search" name="search">
+                <button class="btn btn-outline-success " type="submit"><i class="fas fa-search"></i></button>
               </form>
+              <a href="{{ route('setlists.create') }}" class="btn btn-default btn-block">
+                フォルダを追加する
+              </a>
             </div>
-            @endforeach
+            <div class="list-group">
+              <div class="">
+                @foreach($setlists as $setlist)
+                <a href="{{ route('songs.index', ['setlist' => $setlist->id]) }}" class="list-group-item {{ $current_setlist_id === $setlist->id ? 'active' : '' }}">
+                  {{ $setlist->title }}
+                </a>
+                <div class="text-right">
+                  <button type="button" class="btn dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">▽
+                  </button>
+                  <div class="dropdown-menu" style="background-color: #fff;">
+                    <a href="{{ route('setlists.edit', ['setlist' => $setlist->id]) }}" class='list-group-item dropdown-item'>編集
+                    </a>
+                    <form action="{{ route('setlists.delete', ['setlist' => $setlist->id]) }}" method="POST" onsubmit="return checkDelete()">
+                      @csrf
+                      @method('DELETE')
+                      <button type='submit' class='float-right list-group-item dropdown-item'> 削除</button>
+                    </form>
+                  </div>
+                </div>
+                @endforeach
+              </div>
+            </div>
           </div>
         </div>
       </nav>
@@ -46,60 +53,81 @@
     <div class="column col-md-8">
       <!-- ここにタスクが表示される -->
       <div class="panel panel-default">
-        <div class="panel-heading">セットリスト</div>
-        <div class="panel-body">
-          <div class="text-right">
-            <a href="{{ route('songs.create', ['setlist' => $current_setlist_id]) }}" class="btn btn-default btn-block">
-              曲を追加する
-            </a>
+        <div id="accordion" class="accordion-container">
+
+          <div class="panel-heading accordion-title js-accordion-title" style="background-color: #e6e9ed;">セットリスト</div>
+          <div class="accordion-content">
+
+            <div class="panel-body">
+              <div class="text-right">
+                <a href="{{ route('songs.create', ['setlist' => $current_setlist_id]) }}" class="btn btn-default btn-block">
+                  曲を追加する
+                </a>
+              </div>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>曲順</th>
+                  <th>タイトル</th>
+                  <th>
+                    <div class="text-center">
+                      アーティスト名
+                    </div>
+                  </th>
+                  <th>時間</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="sort">
+                <?php $i = 1; //表示順用のカウンタ　
+                ?>
+                @foreach($songs as $song)
+                <tr>
+                  <td class="class_orderby_id"> {{ $i++ }}</td>
+                  <td class="textbox">{{ $song->title }}</td>
+                  <td class="textbox">
+                    <div class="text-center">
+                      {{ $song->band_name }}
+                    </div>
+                  </td>
+                  <td class="textbox">{{ substr($song->time, 0, 5)}}</td>
+                  <td>
+                    <div class="text-right">
+                      <a href="{{ route('songs.edit', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" class='btn btn-primary btn-sm'>編集</a>
+                    </div>
+                  </td>
+                  <form action="{{ route('songs.delete', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" method="POST" onsubmit="return checkDelete()">
+                    @csrf
+                    @method('DELETE')
+                    <td><button type='submit' class='btn btn-primary btn-sm'> 削除</button></td>
+                  </form>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
           </div>
         </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>曲順</th>
-              <th>タイトル</th>
-              <th>アーティスト名</th>
-              <th>時間</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="sort">
-            <?php $i = 1; //表示順用のカウンタ　
-            ?>
-            @foreach($songs as $song)
-            <tr>
-              <td class="class_orderby_id"> {{ $i++ }}</td>
-              <td class="textbox">{{ $song->title }}</td>
-              <td class="textbox">{{ $song->band_name }}</td>
-              <td class="textbox">{{ substr($song->time, 0, 5)}}</td>
-              <td><a href="{{ route('songs.edit', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" class='btn btn-primary'>編集</a></td>
-              <form action="{{ route('songs.delete', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" method="POST" onsubmit="return checkDelete()">
-                @csrf
-                @method('DELETE')
-                <td><button type='submit' class='btn btn-primary'> 削除</button></td>
-              </form>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
       </div>
     </div>
     <div class="container">
       <div class="row">
         <div class="col col-md-8">
           <nav class="panel panel-default">
-            <div class="panel-heading">
-              <input type="text" size="30" id="search" value="下北沢　ライブハウス" />
-              <input type="button" size="55" value="検索" onClick="SearchGo()" />
+            <div id="accordion" class="accordion-container">
+              <div class="panel-heading accordion-title js-accordion-title" style="background-color: #e6e9ed;">
+                <input type="text" size="30" id="search" value="下北沢　ライブハウス" />
+                <input type="button" size="55" value="検索" onClick="SearchGo()" />
+              </div>
+              <div id="map_canvas" style="width: 100%; height: 30%;"></div>
             </div>
-            <div id="map_canvas" style="width: 100%; height: 30%;"></div>
-          </nav>
         </div>
+        </nav>
       </div>
     </div>
   </div>
+</div>
 </div>
 @endsection
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
@@ -114,7 +142,19 @@
     }
   }
 </script>
-<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<script>
+  jQuery(function($) {
+
+    $('.js-accordion-title').on('click', function() {
+      /*クリックでコンテンツを開閉*/
+      $(this).next().slideToggle();
+      /*矢印の向きを変更*/
+      $(this).toggleClass('open');
+    });
+
+  });
+</script>
 
 <script>
   // GET以外では、csrfトークンが無いとエラーになる。
@@ -137,8 +177,8 @@
         for (var i = 0, len = arr_rec.length; i < len; i++) {
           console.log(arr_rec[i]);
           $.ajax({
-            type: 'PUT',
-            url: 'songs/' + arr_rec[i],
+            type: 'POST',
+            url: "songs/" + arr_rec[i],
             data: {
               'orderby_id': i + 1
             },
@@ -164,8 +204,8 @@
 
       // MySQLレコードを更新
       $.ajax({
-        type: 'PUT',
-        url: 'songs/' + record_id,
+        type: 'POST',
+        url: "songs/" + record_id,
         data: {
           'class_name': record_text
         },

@@ -5,12 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>SetList App</title>
   @yield('styles')
   <link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('css/point.css') }}">
 </head>
 
 <body>
