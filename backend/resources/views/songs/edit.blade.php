@@ -34,7 +34,7 @@
               <input type="time" class="form-control" name="time" id="time" value="{{ old('time') ?? $song->formatted_time }}" />
             </div>
             <div class="text-right">
-              <button type="submit" class="btn btn-primary">送信</button>
+              <button type="submit" class="btn btn-primary">更新</button>
             </div>
           </form>
           <div class="text-right">

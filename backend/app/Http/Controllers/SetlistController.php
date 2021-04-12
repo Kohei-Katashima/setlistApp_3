@@ -50,7 +50,7 @@ class SetlistController extends Controller
         $setlist->title = $request->title;
         $setlist->save();
 
-        Session::flash('err_msg', '曲が更新されました。');
+        Session::flash('err_msg', 'セットリストファイルが更新されました。');
 
         return redirect()->route('songs.index', [
             'setlist' => $setlist,
