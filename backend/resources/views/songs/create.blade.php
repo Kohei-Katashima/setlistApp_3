@@ -33,6 +33,10 @@
                 <label for="time">時間</label>
                 <input type="time" class="form-control" name="time" id="time" value="{{ old('time') }}"　min="00:00" max="12:59" />
               </div>
+              <div class="form-group">
+                <label for="memo">メモ</label>
+                <input type="text" class="form-control" name="memo" id="memo" value="{{ old('memo') }}" />
+              </div>
               <div class="text-right">
                 <button type="submit" class="btn btn-primary">追加</button>
               </div>

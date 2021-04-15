@@ -75,6 +75,7 @@
                       </div>
                     </th>
                     <th>時間</th>
+                    <th>メモ</th>
                     <th></th>
                     <th></th>
                   </tr>
@@ -83,15 +84,16 @@
                   <?php $i = 1; //表示順用のカウンタ　
                   ?>
                   @foreach($songs as $song)
-                  <tr>
+                  <tr id="{{ $song->id }}">
                     <td class="class_orderby_id"> {{ $i++ }}</td>
-                    <td class="textbox">{{ $song->title }}</td>
-                    <td class="textbox">
+                    <td>{{ $song->title }}</td>
+                    <td>
                       <div class="text-center">
                         {{ $song->band_name }}
                       </div>
                     </td>
-                    <td class="textbox">{{ substr($song->time, 0, 5)}}</td>
+                    <td>{{ substr($song->time, 0, 5)}}</td>
+                    <td>{{ ($song->memo)}}</td>
                     <td>
                       <div class="text-right">
                         <a href="{{ route('songs.edit', ['setlist' => $song->setlist_id, 'song' => $song->id]) }}" class='btn btn-primary btn-sm'>編集</a>
@@ -129,7 +131,7 @@
 @endsection
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 <script>
   function checkDelete() {
     if (window.confirm('削除してよろしいですか？')) {
@@ -175,7 +177,7 @@
           console.log(arr_rec[i]);
           $.ajax({
             type: 'POST',
-            url: "songs/" + arr_rec[i],
+            url: "songs/" + arr_rec[i] + "/edit",
             data: {
               'orderby_id': i + 1
             },
@@ -190,26 +192,6 @@
           $(this).text(i++);
         });
       }
-    });
-
-    // テキストボックスからフォーカスが離れたら、入力されている文字列でレコード更新する
-    $(".textbox").focusout(function() {
-
-      // フォーカスの外れたレコードIDと文字列を取得
-      var record_id = $(this).parent("td").parent("tr").attr('id');
-      var record_text = $(this).val();
-
-      // MySQLレコードを更新
-      $.ajax({
-        type: 'POST',
-        url: "songs/" + record_id,
-        data: {
-          'class_name': record_text
-        },
-        success: function(data) {
-          console.log(data);
-        }
-      });
     });
   });
 </script>

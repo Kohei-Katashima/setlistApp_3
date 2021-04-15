@@ -33,9 +33,14 @@
               <label for="time">時間</label>
               <input type="time" class="form-control" name="time" id="time" value="{{ old('time') ?? $song->formatted_time }}" />
             </div>
+            <div class="form-group">
+                <label for="memo">メモ</label>
+                <input type="text" class="form-control" name="memo" id="memo" value="{{ old('memo') ?? $song->memo}}" />
+              </div>
             <div class="text-right">
               <button type="submit" class="btn btn-primary">更新</button>
             </div>
+          <input type="hidden" name="id" value="{{ old('id') ?? $song->id }}">
           </form>
           <div class="text-right">
             <small class="mt-3 pt-3">
