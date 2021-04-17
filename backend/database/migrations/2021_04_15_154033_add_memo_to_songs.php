@@ -15,7 +15,7 @@ class AddMemoToSongs extends Migration
     {
         Schema::table('songs', function (Blueprint $table) {
             //
-            $table->string('memo', 100);
+            $table->string('memo', 100)->nullable();
         });
     }
 

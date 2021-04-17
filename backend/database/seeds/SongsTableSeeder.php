@@ -20,6 +20,7 @@ class SongsTableSeeder extends Seeder
                 'band_name' => "サンプルバンド {$num}",
                 'title' => "サンプル曲 {$num}",
                 'time' => Carbon::now(),
+                'order' => "{$num}",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

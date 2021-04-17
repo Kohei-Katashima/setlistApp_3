@@ -31,7 +31,7 @@
             </div>
             <div class="form-group">
               <label for="time">時間</label>
-              <input type="time" class="form-control" name="time" id="time" value="{{ old('time') ?? $song->formatted_time }}" />
+              <input type="time" class="form-control" name="time" id="time" value="{{ old('time') ?? $song->time }}" />
             </div>
             <div class="form-group">
                 <label for="memo">メモ</label>
