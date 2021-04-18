@@ -31,15 +31,14 @@ class SongController extends Controller
         // 選ばれたフォルダに紐づく曲を取得する
         $songs = $setlist->songs()->get();
 
-        //     $sum = Song::select('SEC_TO_TIME(sum(time_to_sec(TIMEDURATION)))')
-        //   ->where('setlist_id', '4')->get();
-
+        // $sum = Song::selectRaw('SEC_TO_TIME(sum(time_to_sec(time)))')->groupBy('setlist_id')->get();
+        $sum = Song::selectRaw('sec_to_time(sum( time_to_sec(time))) as total_time')->groupBy('setlist_id')->get();
+        // dd($sum);
 
         // $sum = $songs->sum('time_to_sec(time)) as total_sec,
         // sec_to_time(sum( time_to_sec(time))) as total_time ');
 
 
-        // dd($sum);
 
         return view('songs/index', [
             'setlists' => $setlists,
@@ -108,6 +107,7 @@ class SongController extends Controller
 
     public function update(CreateSong $request)
     {
+        // dd($request->songs);
         $songs = Song::all();
 
         foreach ($songs as $song) {

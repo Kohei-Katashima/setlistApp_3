@@ -41,16 +41,25 @@
                     {{ $setlist->title }}
                   </a>
                   <div class="text-right">
-                    <button type="button" class="btn btn-lg dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    </button>
-                    <div class="dropdown-menu" style="background-color: #fff;">
-                      <a href="{{ route('setlists.edit', ['setlist' => $setlist->id]) }}" class='list-group-item dropdown-item'>編集
-                      </a>
-                      <form action="{{ route('setlists.delete', ['setlist' => $setlist->id]) }}" method="POST" onsubmit="return checkDelete()">
-                        @csrf
-                        @method('DELETE')
-                        <button type='submit' class='float-right list-group-item dropdown-item'> 削除</button>
-                      </form>
+                    <div class="ml-auto card-text">
+                      <div class="dropdown">
+                        <button type="button" class="btn btn-lg dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </button>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="{{ route('setlists.edit', ['setlist' => $setlist->id]) }}">
+                            <i class="fas fa-pen mr-1"></i>フォルダを編集する
+                          </a>
+                          <div class="dropdown-divider"></div>
+                          <form action="{{ route('setlists.delete', ['setlist' => $setlist->id]) }}" method="POST" onsubmit="return checkDelete()">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="dropdown-item text-danger">
+                              <i class="fas fa-trash-alt mr-1"></i>フォルダを削除する
+                            </button>
+                          </form>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   @endforeach

@@ -10,7 +10,6 @@
         <th>時間</th>
         <th>メモ</th>
         <th></th>
-        <th></th>
       </tr>
     </thead>
     <draggable
@@ -30,24 +29,36 @@
         <td>{{ song.time | moment(5) }}</td>
         <td class="text-nowrap">{{ song.memo }}</td>
         <td>
-          <div class="text-right">
-            <a
-              :href="'songs/' + song.id + '/edit'"
-              class="btn btn-primary btn-sm"
-              >編集</a
-            >
+          <div class="ml-auto card-text">
+            <div class="dropdown">
+              <a
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <button type="button" class="btn btn-link text-muted m-0 p-2">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" :href="'songs/' + song.id + '/edit'">
+                  <i class="fas fa-pen mr-1"></i>曲を編集する
+                </a>
+                <div class="dropdown-divider"></div>
+                <form
+                  :action="'songs/' + song.id + '/delete'"
+                  method="POST"
+                  v-on:click="checkDelete()"
+                >
+                  <input type="hidden" name="_token" :value="csrf" />
+                  <input type="hidden" name="_method" value="delete" />
+                  <button type="submit" class="dropdown-item text-danger">
+                    <i class="fas fa-trash-alt mr-1"></i>曲を削除する
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
-        </td>
-        <td>
-          <form
-            :action="'songs/' + song.id + '/delete'"
-            method="POST"
-            v-on:click="checkDelete()"
-          >
-            <input type="hidden" name="_token" :value="csrf" />
-            <input type="hidden" name="_method" value="delete" />
-            <button type="submit" class="btn btn-primary btn-sm">削除</button>
-          </form>
         </td>
       </tr>
     </draggable>
@@ -67,18 +78,18 @@ export default {
       csrf: document.head.querySelector('meta[name="csrf-token"]').content,
     };
   },
-
   methods: {
     update() {
-      tihs.songsNew.map((song, index) => {
+      this.songsNew.map((song, index) => {
         song.order = index + 1;
       });
-
       axios
-        .put("/songs/update", {
+        .put("songs/update", {
           songs: this.songsNew,
         })
-        .them((response) => {});
+        .then((response) => {
+          // success message
+        });
     },
     checkDelete: function () {
       if (window.confirm("削除してよろしいですか？")) {
@@ -88,8 +99,6 @@ export default {
       }
     },
   },
-  computed: {},
-
   mounted() {
     console.log("Component mounted.");
   },

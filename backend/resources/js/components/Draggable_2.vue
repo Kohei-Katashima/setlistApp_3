@@ -1,29 +1,29 @@
 <template>
   <div>
-    <draggable tag="tbody" v-model="items">
-      <tr v-for="(song) in songs" :key="song.id">
+    <draggable tag="ul" v-model="songs">
+      <li v-for="(song, index) in getSongs" :key="index">
         {{
           song.title
         }}-(No.{{
           song.id
         }})
-      </tr>
+      </li>
     </draggable>
   </div>
 </template>
 
 <script>
 import draggable from "vuedraggable";
+import Storage from 'vue-ls';
 const Storage = window.VueStorage;
 Vue.use(Storage);
 
 export default {
   components: {
     draggable,
+    Storage,
   },
-  data: {
-    songs: [],
-  },
+  props: ["songs"],
   beforeMount: function () {
     if (Vue.ls.get("lsValue")) {
       // ブラウザストレージデータがある場合
@@ -34,16 +34,7 @@ export default {
     }
   },
   methods: {
-    doReload: function () {
-      // ページのリロード
-      location.reload();
-    },
-    doSessionClear: function () {
-      // ブラウザストレージを削除する
-      if (confirm("セッションを削除します")) {
-        Vue.ls.clear();
-      }
-    },
+    
   },
   computed: {
     getSongs: {

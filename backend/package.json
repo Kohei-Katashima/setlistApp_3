@@ -28,6 +28,7 @@
         "@dafcoe/vue-collapsible-panel": "^0.2.0",
         "@ivanv/vue-collapse-transition": "^1.0.2",
         "bootstrap-vue": "^2.21.2",
+        "vue-ls": "^3.2.2",
         "vue-router": "^3.5.1"
     }
 }

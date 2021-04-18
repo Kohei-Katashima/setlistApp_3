@@ -40,7 +40,7 @@
     </nav>
   </header>
   <main>
-    <div id="app">
+    <div id="app" v-cloak>
       @yield('content')
     </div>
   </main>

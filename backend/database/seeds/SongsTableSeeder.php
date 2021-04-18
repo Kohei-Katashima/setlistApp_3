@@ -17,13 +17,24 @@ class SongsTableSeeder extends Seeder
         foreach (range(1, 3) as $num) {
             DB::table('songs')->insert([
                 'setlist_id' => 1,
-                'band_name' => "サンプルバンド {$num}",
+                'band_name' => "サンプルバンド",
                 'title' => "サンプル曲 {$num}",
                 'time' => Carbon::now(),
                 'order' => "{$num}",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ]);
+            ],
+            [
+                'setlist_id' => 2,
+                'band_name' => "サンプルバンド 2",
+                'title' => "サンプル曲 {$num}",
+                'time' => Carbon::now(),
+                'order' => "{$num}",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+
+        );
         }
     }
 }

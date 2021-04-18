@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
         // 曲編集
         Route::get('/setlists/{setlist}/songs/{song}/edit', 'SongController@showEditForm')->name('songs.edit');
         Route::post('/setlists/{setlist}/songs/{song}/edit', 'SongController@edit');
-        Route::put('/setlists/{setlist}/songs/{song}/update', 'SongController@update')->name('songs.update');
+        Route::put('/setlists/{setlist}/songs/update', 'SongController@update')->name('songs.update');
 
         // 削除
         Route::delete('/setlists/{setlist}/songs/{song}/delete', 'SongController@delete')->name('songs.delete');
