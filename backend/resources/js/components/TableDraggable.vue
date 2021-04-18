@@ -2,6 +2,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th></th>
         <th class="text-nowrap">曲順</th>
         <th>タイトル</th>
         <th>
@@ -14,11 +15,12 @@
     </thead>
     <draggable
       :list="songsNew"
-      :options="{ animation: 200 }"
+      :options="{ animation: 200, handle: '.my-handle'}"
       :element="'tbody'"
       @change="update"
     >
       <tr v-for="(song, index) in songsNew" :key="index">
+        <td><span class="my-handle"><i class="fas fa-arrows-alt-v" aria-hidden="true"></i></span></td>
         <td>{{ index + 1 }}</td>
         <td>{{ song.title }}</td>
         <td>
@@ -109,3 +111,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.my-handle {
+  cursor: move;
+}
+</style>

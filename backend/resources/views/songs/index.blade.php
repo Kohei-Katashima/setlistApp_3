@@ -99,7 +99,7 @@
         <div class="col col-md-12">
           <nav class="panel panel-default">
             <div class="panel-heading " style="background-color: #e6e9ed;">
-              <input type="text" size="50" id="search" value="下北沢　ライブハウス" />
+              <input type="text" size="40" id="search" value="下北沢　ライブハウス" />
               <input type="button" size="55" value="検索" onClick="SearchGo()" />
             </div>
             <div class="panel-body">
