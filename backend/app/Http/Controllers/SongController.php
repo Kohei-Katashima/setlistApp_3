@@ -29,7 +29,7 @@ class SongController extends Controller
         $setlists = Auth::user()->setlists()->get();
 
         // 選ばれたフォルダに紐づく曲を取得する
-        $songs = $setlist->songs()->get();
+        $songs = $setlist->songs()->orderBy('order')->get();
 
         // $sum = Song::selectRaw('SEC_TO_TIME(sum(time_to_sec(time)))')->groupBy('setlist_id')->get();
         $sum = Song::selectRaw('sec_to_time(sum( time_to_sec(time))) as total_time')->groupBy('setlist_id')->get();
@@ -44,7 +44,7 @@ class SongController extends Controller
             'setlists' => $setlists,
             'current_setlist_id' => $setlist->id,
             'songs' => $songs,
-            // 'sum' => $sum,
+            'sum' => $sum,
         ]);
     }
 
@@ -155,12 +155,13 @@ class SongController extends Controller
     public function search(Setlist $setlist, Request $request)
     {
         //
-        $setlists = Setlist::latest()->where('title', 'like', "%{$request->search}%")->paginate(5);
+        // $setlists = Setlist::latest()->where('title', 'like', "%{$request->search}%")->paginate(5);
 
-        $search_result = $request->search . 'を含むセットリストの検索結果' . $setlists->total() . '件';
+        // ユーザーのフォルダのタイトル検索を取得する
+        $setlists = Auth::user()->setlists()->where('title', 'like', "%{$request->search}%")->paginate(5);
 
-        // ユーザーのフォルダを取得する
-        $setlists = Auth::user()->setlists()->get();
+        $search_result = $request->search . ' を含むセットリストの検索結果 ' . $setlists->total() . '件';
+
 
         // 選ばれたフォルダに紐づく曲を取得する
         $songs = $setlist->songs()->get();

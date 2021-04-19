@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class Handler extends ExceptionHandler
 {
@@ -14,6 +15,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         //
+        \Illuminate\Auth\Access\AuthorizationException::class,
     ];
 
     /**
@@ -50,6 +52,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+
+        //Useful since some methods cannot be accessed in certain URL extensions
+        if ($exception instanceof AuthorizationException) {
+            return response()->view('errors.404', [], 404);
+        }
+
         return parent::render($request, $exception);
     }
 }

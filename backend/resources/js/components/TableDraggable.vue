@@ -4,10 +4,8 @@
       <tr>
         <th></th>
         <th class="text-nowrap">曲順</th>
-        <th>タイトル</th>
-        <th>
-          <div class="text-center">アーティスト名</div>
-        </th>
+        <th class="text-nowrap">タイトル</th>
+        <th class="text-nowrap">アーティスト名</th>
         <th>時間</th>
         <th>メモ</th>
         <th></th>
@@ -20,14 +18,10 @@
       @change="update"
     >
       <tr v-for="(song, index) in songsNew" :key="index">
-        <td><span class="my-handle"><i class="fas fa-arrows-alt-v" aria-hidden="true"></i></span></td>
+        <td class="my-handle"><i class="fas fa-arrows-alt-v" aria-hidden="true"></i></td>
         <td>{{ index + 1 }}</td>
-        <td>{{ song.title }}</td>
-        <td>
-          <div class="text-center">
-            {{ song.band_name }}
-          </div>
-        </td>
+        <td class="text-nowrap">{{ song.title }}</td>
+        <td class="text-nowrap">{{ song.band_name }}</td>
         <td>{{ song.time | moment(5) }}</td>
         <td class="text-nowrap">{{ song.memo }}</td>
         <td>
@@ -50,7 +44,7 @@
                 <form
                   :action="'songs/' + song.id + '/delete'"
                   method="POST"
-                  v-on:click="checkDelete()"
+                  @click="checkDelete()"
                 >
                   <input type="hidden" name="_token" :value="csrf" />
                   <input type="hidden" name="_method" value="delete" />

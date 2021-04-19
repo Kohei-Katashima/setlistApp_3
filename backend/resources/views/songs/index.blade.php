@@ -71,7 +71,11 @@
       </nav>
     </div>
     <div class="column col-md-8">
-      <!-- ここにタスクが表示される -->
+      @if(isset($search_result))
+      <div class="panel panel-default">
+      </div>
+      @elseif(!isset($search_result))
+      <!-- ここにリストが表示される -->
       <div class="panel panel-default">
         <b-button block v-b-toggle.accordion-2 size="lg" style="background-color: #e6e9ed; color: #212529; border: none;" class="accordion-title">セットリスト</b-button>
         <b-card no-body class="mb-1">
@@ -93,6 +97,7 @@
           </b-collapse>
         </b-card>
       </div>
+      @endif
     </div>
     <div class="container-fluid">
       <div class="row">
@@ -103,7 +108,7 @@
               <input type="button" size="55" value="検索" onClick="SearchGo()" />
             </div>
             <div class="panel-body">
-              <div id="map_canvas" style="width: 100%; height: 300%;"></div>
+              <div id="map_canvas" style="width: 100%; height: 300px;"></div>
             </div>
           </nav>
         </div>
