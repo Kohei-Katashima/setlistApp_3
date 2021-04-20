@@ -34,6 +34,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/setlists/{setlist}/delete', 'SetlistController@delete')->name('setlists.delete');
     // 検索
     Route::get('/setlists/{setlist}/songs/search', 'SongController@search')->name('songs.search');
+    
+    Route::put('/setlists/{setlist}/songs/update', 'SongController@update')->name('songs.update');
 
     Route::group(['middleware' => 'can:view,setlist'], function () {
         Route::get('/setlists/{setlist}/songs', 'SongController@index')->name('songs.index');
@@ -46,7 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
         // 曲編集
         Route::get('/setlists/{setlist}/songs/{song}/edit', 'SongController@showEditForm')->name('songs.edit');
         Route::post('/setlists/{setlist}/songs/{song}/edit', 'SongController@edit');
-        Route::put('/setlists/{setlist}/songs/update', 'SongController@update')->name('songs.update');
+
 
         // 削除
         Route::delete('/setlists/{setlist}/songs/{song}/delete', 'SongController@delete')->name('songs.delete');

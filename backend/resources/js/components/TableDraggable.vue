@@ -13,12 +13,14 @@
     </thead>
     <draggable
       :list="songsNew"
-      :options="{ animation: 200, handle: '.my-handle'}"
+      :options="{ animation: 200, handle: '.my-handle' }"
       :element="'tbody'"
       @change="update"
     >
       <tr v-for="(song, index) in songsNew" :key="index">
-        <td class="my-handle"><i class="fas fa-arrows-alt-v" aria-hidden="true"></i></td>
+        <td class="my-handle">
+          <i class="fas fa-arrows-alt-v" aria-hidden="true"></i>
+        </td>
         <td>{{ index + 1 }}</td>
         <td class="text-nowrap">{{ song.title }}</td>
         <td class="text-nowrap">{{ song.band_name }}</td>
@@ -85,6 +87,10 @@ export default {
         })
         .then((response) => {
           // success message
+        })
+        .catch((error) => {
+          //
+          console.log(error);
         });
     },
     checkDelete: function () {

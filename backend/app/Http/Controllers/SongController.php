@@ -105,20 +105,26 @@ class SongController extends Controller
         ]);
     }
 
-    public function update(CreateSong $request)
+    public function update(Request $request)
     {
-        // dd($request->songs);
-        $songs = Song::all();
 
-        foreach ($songs as $song) {
-            $song->timestamps = false;
-            $id = $song->id;
-            foreach ($request->songs as $songFrontEnd) {
-                if ($songFrontEnd['id'] == $id) {
-                    $song->update(['order' => $songFrontEnd['order']]);
-                }
-            }
-        }
+        foreach ($request->songs as $song) {
+            Song::find($song['id'])->update(['order' => $song['order']]);
+         }
+
+        // dd($request->songs);
+
+        // $songs = Song::all();
+
+        // foreach ($songs as $song) {
+        //     $song->timestamps = false;
+        //     $id = $song->id;
+        //     foreach ($request->songs as $songFrontEnd) {
+        //         if ($songFrontEnd['id'] == $id) {
+        //             $song->update(['order' => $songFrontEnd['order']]);
+        //         }
+        //     }
+        // }
 
         return response('Update Successful.', 200);
     }
